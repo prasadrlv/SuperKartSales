@@ -2,10 +2,11 @@
 import streamlit as st
 import requests
 
-BACKEND_URL = "http://host.docker.internal:7860"
 
 # Sets the page layout to centred mode and adds a title
 st.set_page_config(page_title="SuperKart Sales Prediction Platform", layout="centered")
+
+BACKEND_URL = st.text_input("Backend Url:", value="http://host.docker.internal:7860")
 
 # Injects custom CSS to style
 st.markdown("""

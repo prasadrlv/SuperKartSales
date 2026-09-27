@@ -13,18 +13,19 @@ from flask import Flask, request, jsonify
 import logging
 import sys
 
-# Initialize the Flask app with a name
-superkart_api = Flask("Superkart Sales App")
-@superkart_api.post('/v1/predict')
 # Debug info
 logging.basicConfig(
     level=logging.INFO,
-    format='%(asctime)s - %(name)s - %(levelname)s - %(message)s',
-    handlers=[
-        logging.StreamHandler(sys.stdout)
-    ]
+    format="%(asctime)s - %(name)s - %(levelname)s - %(message)s",
+    handlers=[logging.StreamHandler(sys.stdout)],
+    force=True,
 )
 logger = logging.getLogger(__name__)
+
+
+# Initialize the Flask app with a name
+superkart_api = Flask("Superkart Sales App")
+
 
 logger.info(f"Module name: {__name__}")
 logger.info(f"Flask app name: {superkart_api.name}")
@@ -32,6 +33,7 @@ logger.info(f"Root path: {superkart_api.root_path}")
 
 # Load the trained churn prediction model
 model = joblib.load("superkart_model.joblib")
+
 
 # Define a route for the home page
 @superkart_api.route('/', methods=['GET'])
@@ -123,8 +125,6 @@ def predict_sales_batch():
     and returns the predicted sales as a dictionary in the JSON response.
     """
     try:
-      # Get the JSON data from the request body
-      data = request.get_json()
 
       # Get the uploaded CSV file from the request
       file = request.files['file']
@@ -137,7 +137,7 @@ def predict_sales_batch():
 
 
       # Create a dictionary of predictions with Index as keys
-      output_dict = dict(zip(data.index, predicted_sales_data))  # Use actual prices
+      output_dict = dict(zip(input_data.index, predicted_sales_data))  # Use actual prices
 
       # Return the predictions dictionary as a JSON response
       return output_dict
