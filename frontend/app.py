@@ -6,7 +6,7 @@ import requests
 # Sets the page layout to centred mode and adds a title
 st.set_page_config(page_title="SuperKart Sales Prediction Platform", layout="centered")
 
-BACKEND_URL = st.text_input("Backend Url:", value="http://host.docker.internal:7860")
+BACKEND_URL = st.text_input("Backend Url:", value="http://localhost:7860")
 
 # Injects custom CSS to style
 st.markdown("""
@@ -229,7 +229,7 @@ if st.button("⚡ Run Prediction", type="primary", use_container_width=True):
                     st.success("✅ Prediction Complete!")
                     st.metric(
                             label="Predicted Sales",
-                            value=f"£{predicted_sales:.2f}"
+                            value=f"{predicted_sales:.2f}"
                         )
                 else:
                     # Error if API call fails
